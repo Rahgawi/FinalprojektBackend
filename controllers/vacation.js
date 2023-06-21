@@ -1,3 +1,4 @@
+const User = require('../model/User');
 const Vacation = require('../model/Vacation');
 
 const getAllVacations =  async (req,res) => {
@@ -12,7 +13,8 @@ const getAllVacations =  async (req,res) => {
 
     const getSingleVacation =  async (req,res) => {
         try {
-            const singleVacation = await Vacation.find();
+            const singleVacation = await Vacation.findById();
+            res.send("test");
             res.status(200).json(singleVacation);
           } catch (err) {
             console.log(err);
@@ -23,9 +25,16 @@ const getAllVacations =  async (req,res) => {
     
         const createVacation =  async (req,res) => {
             try {
-                const { description,start_date,end_date } = req.body;
-                const newVacation = await Alarm.create({ description,start_date,end_date});
-                newVacation.save();
+                // const { description,start_date,end_date } = req.body;
+                // const newVacation = await Alarm.create({ description,start_date,end_date});
+                const user = await User.findById(req.params.userId);
+                const newVacation = new Vacation({
+                    start_date: req.body.start_date,
+                    end_date:req.body.end_date,
+                    user: user._id
+                });
+
+                await  newVacation.save();
                 console.log(newVacation);
                
                 res.status(200).send(`A new Vacationperiod ${newVacation.description}has been created!`);

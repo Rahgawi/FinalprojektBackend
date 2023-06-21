@@ -1,4 +1,5 @@
 const Alarm = require("../model/Alarm");
+const User = require("../model/User");
 
 const getAllAlarms = async (req, res) => {
   try {
@@ -23,11 +24,19 @@ const getSingleAlarm = async (req, res) => {
 
 const createAlarm = async (req, res) => {
   try {
-    const { time, day, tune, description } = req.body;
-    // const formattedTime = new Date(time);
-    // const formattedDay = new Date(day);
-    const newAlarm = await Alarm.create({ time, day, tune, description });
-    newAlarm.save();
+    const user = await User.findById(req.params.userId);
+    const newAlarm = new Alarm({
+        time:req.body.time,
+        day:req.body.day,
+        tune:req.body.tune,
+        description:req.body.description,
+        user: user._id
+    });
+    // const { time, day, tune, description } = req.body;
+    // // const formattedTime = new Date(time);
+    // // const formattedDay = new Date(day);
+    // const newAlarm = await Alarm.create({ time, day, tune, description });
+   await newAlarm.save();
     console.log(newAlarm);
    
     res.status(200).send(`A new Alarm ${newAlarm.description}has been created!`);

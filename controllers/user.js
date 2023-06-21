@@ -12,7 +12,15 @@ const getAllUsers =  async (req,res) => {
 
     const getSingleUser =  async (req,res) => {
         try {
-            const singleUser = await User.find();
+            const userId = req.params.userId;
+            const singleUser = await User.findById(userId)
+            .populate('vacations')
+            .populate('alarms');
+            res.send("test");
+
+            if(!singleUser){
+                return res.status(404).json({message:"User not found"});
+            }
             res.status(200).json(singleUser);
           } catch (err) {
             console.log(err);
@@ -26,6 +34,7 @@ const getAllUsers =  async (req,res) => {
                 const { email,password,state } = req.body;
                 const newUser = await User.create({ email,password,state});
                 newUser.save();
+                // res.send("test");
                 console.log(newUser);
                
                 res.status(200).send(`A new User ${newUser.email}has been created!`);
@@ -48,7 +57,7 @@ const getAllUsers =  async (req,res) => {
                   },
                   {new:true}
               );
-              res.status(200).json(updateUser);
+              res.status(200).json(updatedUser);
             } catch (err) {
               console.log(err);
               res.status(500).send(err.message);
@@ -60,7 +69,7 @@ const getAllUsers =  async (req,res) => {
             try {
               const{id} = req.params;
               const deletedUser = await User.findByIdAndDelete(id);
-              res.status(200).send(`${deleteUser.email}has been deleted.`);
+              res.status(200).send(`${deletedUser.email}has been deleted.`);
             } catch (err) {
               console.log(err);
               res.status(500).send(err.message);
