@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const {
   getAllAlarms,
@@ -6,13 +6,9 @@ const {
   createAlarm,
   updateAlarm,
   deleteAlarm,
-} = require("../controllers/alarm");
+} = require('../controllers/alarm');
 
-router.route("/alarm").get(getAllAlarms).post(createAlarm);
-router
-  .route("/alarm/:id")
-  .get(getSingleAlarm)
-  .put(updateAlarm)
-  .delete(deleteAlarm)
+router.route('/').get(getAllAlarms).post(createAlarm);
+router.route('/:id').get(getSingleAlarm).put(updateAlarm).delete(deleteAlarm);
 
 module.exports = router;

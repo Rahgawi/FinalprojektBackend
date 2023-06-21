@@ -17,9 +17,9 @@ app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
 //routing middlewares:
-app.use("/",userRouter);
+app.use("/user",userRouter);
 app.use("/alarm", alarmRouter);
-app.use("/alarm/vacation", vacationRouter);
+app.use("/vacation", vacationRouter);
 
 app.get('/', (req, res) => {
   res.send('HolidayBreaks');
