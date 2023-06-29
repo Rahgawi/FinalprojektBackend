@@ -4,9 +4,9 @@ const{Schema} = mongoose;
 
 const Alarm= new Schema({
    
-    time:{ type: Date, required: true},
-    day: {type:  String},
-    tune:{type:  String, required: true},
+    time:{ type: String}, 
+    days: {type: Array},
+    tune:{type: String},
     description:{type: String}
     
 });

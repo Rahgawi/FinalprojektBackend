@@ -5,9 +5,9 @@ const db = require("./db");
 const alarmRouter = require("./routes/alarm");
 const userRouter = require("./routes/user");
 const vacationRouter = require("./routes/vacation");
-
+const deleteAllAlarms = require("./routes/alarm");
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5002;
 
 db();
 
@@ -17,9 +17,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
 //routing middlewares:
-app.use("/user",userRouter);
-app.use("/alarm", alarmRouter);
-app.use("/vacation", vacationRouter);
+app.use("/", userRouter, alarmRouter, vacationRouter, deleteAllAlarms);
 
 app.get('/', (req, res) => {
   res.send('HolidayBreaks');

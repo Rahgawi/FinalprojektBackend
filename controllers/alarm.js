@@ -23,14 +23,15 @@ const getSingleAlarm = async (req, res) => {
 };
 
 const createAlarm = async (req, res) => {
+  console.log("req body post", req.body)
   try {
     const user = await User.findById(req.params.userId);
     const newAlarm = new Alarm({
         time:req.body.time,
-        day:req.body.day,
+        days:req.body.days,
         tune:req.body.tune,
         description:req.body.description,
-        user: user._id
+        // user: user._id
     });
     // const { time, day, tune, description } = req.body;
     // // const formattedTime = new Date(time);
@@ -76,10 +77,21 @@ const deleteAlarm = async (req, res) => {
   }
 };
 
+const deleteAllAlarms = async (req, res) => {
+  console.log("here")
+  try {
+    const deletedAlarms = await Alarm.deleteMany();
+    res.status(200).send(`All Alarms have been deleted.`);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send(err.message);
+  }
+}
+
 module.exports = {
   getAllAlarms,
   getSingleAlarm,
   createAlarm,
   updateAlarm,
-  deleteAlarm,
+  deleteAlarm,deleteAllAlarms
 }; 

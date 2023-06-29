@@ -1,5 +1,6 @@
 const User = require('../model/User');
 const Vacation = require('../model/Vacation');
+const Alarm = require('../model/Alarm');
 
 const getAllVacations =  async (req,res) => {
     try {

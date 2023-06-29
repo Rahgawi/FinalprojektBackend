@@ -10,9 +10,9 @@ const {
   } = require("../controllers/vacation");
 
 
-  router.route("/").get(getAllVacations).post(createVacation);
+  router.route("/vacations/").get(getAllVacations).post(createVacation);
   router
-    .route("/:id")
+    .route("/vacations/:id")
     .get(getSingleVacation)
     .put(updateVacation)
     .delete(deleteVacation)

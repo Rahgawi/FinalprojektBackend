@@ -5,10 +5,11 @@ const {
   getSingleAlarm,
   createAlarm,
   updateAlarm,
-  deleteAlarm,
+  deleteAlarm, deleteAllAlarms
 } = require('../controllers/alarm');
 
-router.route('/').get(getAllAlarms).post(createAlarm);
-router.route('/:id').get(getSingleAlarm).put(updateAlarm).delete(deleteAlarm);
+router.route('/alarms').get(getAllAlarms).post(createAlarm);
+router.route('/alarms/:id').get(getSingleAlarm).put(updateAlarm).delete(deleteAlarm);
+router.route('/deletebulk').delete(deleteAllAlarms).get((req, res) => res.send("test"));
 
 module.exports = router;
